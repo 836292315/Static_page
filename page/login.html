@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="css/login.css">
+	</head>
+	<body>
+		<div id="bgpic"><img src="img/1280_852.jpg" alt=""></div>
+		<div id="login_box">
+			<p>用户登录 User Login</p>
+			<div id="cutline"></div>
+			<form action="">
+				<table>
+					<tr>
+						<td>
+							<label for="">用户名:</label><input id="username" type="text" name="userAccount" >
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="">密码:&nbsp&nbsp&nbsp</label><input id="password" type="text" name="userPassword" >
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<label for="">验证码:</label><input id="vercode" type="text" name="vercode" >
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<input id="cancel" type="reset" value="取消">
+							<input id="submit" type="submit" value="确认" onclick="login()">
+						</td>
+					</tr>
+				</table>	
+			</form>
+		</div>
+		<script>
+			/*window.onload=function(){
+				var btn = document.getElementById("submit");
+					btn.onclick=function(){
+						window.close();
+						window.open("main.html");
+
+					}
+			}
+			
+			*/
+
+    function login() {
+        var username = $("#userAccount").val();
+        var password = $("#userPassword").val();
+        var data = {
+            "username": username,
+            "password": password
+        };
+
+
+
+        $.ajax({
+            type: "POST",
+            url: "http://localhost/user/login",
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (data) {
+                if (data.code === 0) {
+                    window.location.pathname = 'main.html';
+                    localStorage.setItem('username',username);
+                } else {
+                    alert('用户名或者密码错误');
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert("登录失败！" + textStatus + errorThrown);
+            }
+
+        })
+
+    }
+</script>
+		</script>
+	</body>
+</html>
